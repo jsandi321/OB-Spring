@@ -8,12 +8,14 @@ import org.springframework.context.ApplicationContext;
 
 import java.time.LocalDate;
 
+import static org.springframework.boot.SpringApplication.run;
+
 @SpringBootApplication
 public class ObRestDatajpaApplication {
 
 	public static void main(String[] args) {
 
-		ApplicationContext context = SpringApplication.run(ObRestDatajpaApplication.class, args);
+		ApplicationContext context = run(ObRestDatajpaApplication.class, args);
 		BookRepository repository = context.getBean(BookRepository.class);
 
 		//Operaciones CRUD (no se hace aqui pero para la pruebas)

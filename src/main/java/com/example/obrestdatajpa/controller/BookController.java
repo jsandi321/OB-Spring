@@ -2,10 +2,13 @@ package com.example.obrestdatajpa.controller;
 
 import com.example.obrestdatajpa.entities.Book;
 import com.example.obrestdatajpa.repositories.BookRepository;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +29,9 @@ public class BookController {
     //Operaciones CRUD para la entidad Book
 
     //Buscar todos los libros en base de datos (lista de libros)
+
     @GetMapping("/api/books")
+    @ApiOperation(("Obtener todos los libros en la base de datos"))
     public List<Book> finAll(){
         //recuperar y devolver los libros en base de datos
         return bookRepository.findAll();
@@ -39,7 +44,8 @@ public class BookController {
      */
     //buscar un solo libro en la base de datos segun id
     @GetMapping("/api/books/{id}")
-    public ResponseEntity<Book> findOneById(@PathVariable Long id){
+    @ApiOperation("Buscar un libro por su ID")
+    public ResponseEntity<Book> findOneById(@ApiParam("Clave Primaria tipo Long") @PathVariable Long id){
 
         Optional<Book> bookOpt = bookRepository.findById(id);
         //Opcion 1
@@ -61,7 +67,8 @@ public class BookController {
      */
     //crear un nuevo libro en base de datos
     @PostMapping("/api/books")
-    public ResponseEntity<Book> create(@RequestBody Book book){
+    @ApiOperation("Crear un nuevo libro en la base de datos")
+    public ResponseEntity<Book> create(@ApiParam("Archivo Json")@RequestBody Book book){
         //Guardar el libro recibido en la base de datos y le asigna una clave primaria
         if(book.getId() != null){   //Quiere decir que el libro ya existe y se debe actualizar no crear
             log.warn("trying to create a book with id");
@@ -79,6 +86,7 @@ public class BookController {
      */
     //actualizar un libro existente en base de datos
     @PutMapping("/api/books")   //Por lo general usamos put para editar y post para crear
+    @ApiOperation("Actualizar informacion de un libro ya existente en la base de datos")
     public ResponseEntity<Book> update(@RequestBody Book book){
         if(book.getId() == null){   //Si no existe el ID es un libro nuevo y debe crearse no actulizar
             log.warn("trying to update a non existent book");
@@ -99,6 +107,7 @@ public class BookController {
      * @return
      */
     //borrar un libro en base de datos
+    @ApiIgnore      //ignorar este metodo en el swagger
     @DeleteMapping("/api/books/{id}")
     public ResponseEntity<Book> delete(@PathVariable Long id){
         if(!bookRepository.existsById(id)){
@@ -113,6 +122,7 @@ public class BookController {
      * Eliminar todos los libros de la base de datos
      * @return
      */
+    @ApiIgnore  //ignorar este metodo en el swagger
     @DeleteMapping("/api/books")
     public ResponseEntity<Book> deleteAll(){
         log.info("REST Request Deleting All Books");

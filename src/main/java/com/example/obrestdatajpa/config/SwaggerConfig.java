@@ -2,6 +2,7 @@ package com.example.obrestdatajpa.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -12,14 +13,17 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.Collections;
 
 /**
- * Configuracion Swagger para la generacion de documentacion en la API REST
+ * Configuración Swagger para la generación de documentación de la API REST
+ *
+ * HTML: http://localhost:8081/swagger-ui/
+ * JSON: http://localhost:8081/v2/api-docs
  */
 @Configuration
 public class SwaggerConfig {
 
-
     @Bean
     public Docket api(){
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiDetails())
                 .select()
@@ -29,11 +33,11 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiDetails(){
-        return new ApiInfo("Spring Boot Books Api REST",
-                "Library Api REST docs",
+        return new ApiInfo("Spring Boot Book API REST",
+                "Library Api rest docs",
                 "1.0",
                 "http://www.google.com",
-                new Contact("Jeison", "http://www.google.com", "example@correo.com"),
+                new Contact("Alan", "http://www.google.com", "alan@example.com"),
                 "MIT",
                 "http://www.google.com",
                 Collections.emptyList());
